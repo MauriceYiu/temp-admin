@@ -1,0 +1,339 @@
+<template>
+  <div class="log">
+    <div class="head">
+      <div class="back">
+        操作日志
+        <div class="line"></div>
+      </div>
+      <!--<div class="save" @click="addTag(0)">新建</div>-->
+    </div>
+    <div class="content">
+      <div class="client">
+        <div class="filter-container">
+          <div class="left">
+            全部
+          </div>
+          <div class="right">
+            <!--<el-input @keyup.enter.native="getList" style="width: 300px;margin-left: 20px" class="filter-item"-->
+            <!--placeholder="搜索你想要的内容"-->
+            <!--v-model="listQuery.keyword">-->
+            <!--</el-input>-->
+            <!--<el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="getList">-->
+            <!--搜索-->
+            <!--</el-button>-->
+
+          </div>
+        </div>
+
+        <el-table
+          :data="list"
+          stripe
+          v-if="hasPerm('settings:logs')"
+          style="width: 100%">
+
+          <el-table-column align="center" label="ID" width="80">
+            <template slot-scope="scope">
+              <span>{{scope.row.id}}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column align="center" label="操作账号">
+            <template slot-scope="scope">
+              <span>{{scope.row.account}}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column align="center" label="账号昵称">
+            <template slot-scope="scope">
+              <span>{{scope.row.userName}}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column align="center" label="操作业务">
+            <template slot-scope="scope">
+              <span>{{scope.row.detail}}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column align="center" label="操作类型">
+            <template slot-scope="scope">
+              <span>{{scope.row.action}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" label="操作时间">
+            <template slot-scope="scope">
+              <span>{{scope.row.createTime | parseTime('{y}-{m}-{d} {h}:{i}')}}</span>
+            </template>
+          </el-table-column>
+
+        </el-table>
+
+        <div class="paginationBox">
+          <el-pagination
+            background
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="page"
+            :page-sizes="[10,20,30, 50]"
+            :page-size="listQuery.limit"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total"
+          ></el-pagination>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</template>
+
+<script>
+
+  import {newsDelete,} from "../../api/business.js";
+  import {settingSysLogs} from "../../api/settings";
+  import waves from "@/directive/waves"; // 水波纹指令
+  import {parseTime, showDecimal} from "@/utils/index";
+  import {getToken} from "@/utils/auth";
+
+
+  export default {
+    name: "log",
+    directives: {
+      waves,
+    },
+    data() {
+      return {
+        adDelParams: {
+          targetId: 0,
+          token: getToken(),
+        },
+        total: 0,
+        page: 1,
+        list: [],
+        listQuery: {
+          limit: 10,
+          type: "help",
+          page: 0,
+          token: getToken(),
+        }
+
+      };
+    },
+    methods: {
+      handleSizeChange(val) {
+        this.listQuery.limit = val;
+        this.getList()
+      },
+      handleCurrentChange(val) {
+        this.listQuery.page = val - 1
+        this.page = this.listQuery.page + 1
+        // sessionStorage.setItem('settingVip', this.listQuery.page)
+        this.getList()
+      },
+      //删除
+      delTag(data) {
+        this.adDelParams.targetId = data.id;
+        this.$confirm("此操作将删除该条文档, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            newsDelete(this.adDelParams).then(res => {
+              // console.log(res,"res");
+              if (res.status === 200) {
+                this.$message.success("删除成功！");
+                this.getList();
+              } else {
+                this.$message.error(res.message);
+              }
+            });
+          })
+          .catch(() => {
+            this.adDelParams.targetId = "";
+          });
+      },
+
+      addTag(data) {
+        this.$router.push({
+          name: "helpDetail", params: {
+            id: data
+          }
+        })
+      },
+      // 列表
+      getList() {
+        this.listLoading = true;
+        settingSysLogs(this.listQuery).then(json => {
+          this.listLoading = false;
+          if (json.status === 200) {
+            this.list = json.data;
+            this.total = json.total
+          } else {
+
+          }
+        })
+      },
+
+    },
+    mounted() {
+      this.getList()
+    }
+  };
+</script>
+<style>
+
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+
+  .app-container .right {
+    margin: 20px 0;
+    text-align: right;
+  }
+
+  .el-tag + .el-tag {
+    margin-left: 10px;
+  }
+
+  .button-new-tag {
+    margin-left: 10px;
+    height: 32px;
+    line-height: 30px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .input-new-tag {
+    width: 90px;
+    margin-left: 10px;
+    vertical-align: bottom;
+  }
+
+  .log .timeLimit .el-form-item__content {
+    margin-left: 30px !important;
+  }
+
+  .log .el-textarea {
+    width: 86%;
+  }
+
+  .log .time .el-form-item__content {
+    margin-left: 16px !important;
+  }
+
+  .el-table::before {
+    background: none;
+  }
+</style>
+<style lang="scss" scoped>
+  .log {
+    background: rgba(245, 246, 250, 0.61);
+    /*min-height: 100vh;*/
+
+    .head {
+      background: white;
+      height: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 27px 0 40px;
+      .back {
+        color: #409EFF;
+        font-size: 14px;
+        cursor: pointer;
+        line-height: 40px;
+        position: relative;
+        /*border-bottom: 2px solid #5BC0DF;*/
+      }
+      .line {
+        width: 32px;
+        height: 2px;
+        background: #409EFF;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+      }
+      .save {
+        color: #F65860;
+        cursor: pointer;
+      }
+    }
+    .content {
+
+      .form-container {
+        background: white;
+        padding: 30px 0 100px;
+      }
+      & > .client {
+        margin: 20px;
+        background: white;
+        min-height: calc(100vh - 140px);
+        width: 100%;
+        min-height: 100%;
+        background: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .filter-container {
+          display: flex;
+          justify-content: space-between;
+          background: white;
+          padding: 0 20px;
+          height: 60px;
+          border-bottom: 1px solid #f2f2f2;
+          align-items: center;
+          .left {
+            color: #409EFF;
+            font-size: 14px;
+          }
+        }
+        .action {
+          display: flex;
+          justify-content: center;
+          .status {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+            span {
+              margin-right: 6px;
+            }
+          }
+        }
+        .el-table {
+          min-height: calc(100vh - 260px);
+
+        }
+        .paginationBox {
+          margin: 10px auto;
+          text-align: center;
+        }
+      }
+    }
+
+  }
+</style>

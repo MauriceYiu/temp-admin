@@ -1,0 +1,41 @@
+.vip-sign{
+    .top-panle{
+        font-size: 0;
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+        .left-cont,.right-cont{
+            display: inline-block;
+            width: 50%;
+            .tit{
+                font-size: 16px;
+                font-weight: 600;
+                margin-right: 10px;
+            }
+        }
+        .right-cont{
+            text-align: right;
+            .search{
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+        }
+    }
+    .modify{
+        .del{
+            color: #dadada;
+        }
+        .edit{
+            color: #FF9090;
+        }
+        .detail{
+            color: #33C7DA;
+        }
+    }
+    .code{
+        text-align: center;
+        min-height: 300px;
+        #qr-code{
+            display: inline-block;
+        }
+    }
+}

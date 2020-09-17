@@ -1,0 +1,100 @@
+.sign-detail{
+    min-height: 100vh;
+    .tip-info{
+        width: 100%;
+        height: 48px;
+        line-height: 48px;
+        font-size: 14px;
+        padding: 0 10px;
+        background: #f2f2f2;
+        .tip-item{
+            margin-right: 10px;
+        }
+    }
+    .top-panle{
+        font-size: 0;
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+        .left-cont,.right-cont,.center-cont{
+            display: inline-block;
+            font-size: 12px;
+            .tit{
+                font-size: 16px;
+                margin-right: 10px;
+                cursor: pointer;
+            }
+            
+        }
+        .left-cont{
+            width: 40%;
+        }
+        .right-cont{
+            width: 40%;
+        }
+        .center-cont{
+            width: 20%;
+            .top-info-item{
+                padding:0 10px;
+            }
+        }
+        .right-cont{
+            text-align: right;
+            .search{
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+        }
+    }
+    // .bottom-panle{
+    //     height: calc(100vh - 140px);
+    //     .cont-table-bot{
+    //         height: 80%;
+    //         overflow: hidden;
+    //         overflow-y: auto;
+    //     }
+    // }
+    .signs{
+        position: relative;
+        cursor: pointer;
+        i{
+            font-style: normal;
+        }
+        .is-sign{
+            color: #333;
+            &.active{
+                color:rgb(78,196,120);
+            }
+            &.late{
+                color: rgb(255,144,144);
+            }
+        }
+        .sign-item-detail{
+            width: 100%;
+            max-height: 300px;
+            overflow: hidden;
+            overflow-y: auto;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 99999;
+            background: #fff;
+            box-shadow: 0 0 5px rgba(0,0,0,.1);
+            text-align: center;
+            .sign-item{
+                padding: 10px 0;
+                .item-detail{
+                    display: inline-block;
+                    width: 100%;
+                }
+                i{
+                    font-style: normal;
+                }
+            }
+        }
+    }
+    .cont-table-bot{
+        overflow: initial !important;
+        overflow-y: initial !important;
+    }
+}

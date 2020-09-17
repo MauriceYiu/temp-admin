@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>易答在线直播聊天室</title>
+  <link rel="stylesheet" href="./dist/css/chartroom.css"/>
+  <script src="//nos.netease.com/vod163/nePublisher.min.js"></script>
+</head>
+<body>
+<div class="m-head" style="display: none">
+  <div class="g-doc">
+    <div class="logo item">易答在线</div>
+    <div class="nav item">
+      <a href="../index.html">易答在线</a>
+    </div>
+    <div class="nav item">
+      <a href="./list.html">易答在线聊天室首页</a>
+    </div>
+    <div class="info item">
+      <img src="./images/default-icon.png" alt="头像" id="avatar">
+      <!--a href="./roomManage.html" id="nickName">匿名</a-->
+      <span id="nickName">匿名</span>
+      <a href="./login.html" id="chatroom-login">登录</a>
+      <a id="chatroom-logout">注销</a>
+    </div>
+    <div class="action item"><a href="./anchor.html"><b class="icon"></b>我要当主播</a></div>
+  </div>
+</div>
+<div class="g-doc">
+  <div class="m-room" id="room">
+    <div class="g-left">
+      <div class="info">
+        <div class="avatar">
+          <img class="image" id="roomAvatar" src="./images/default-icon.png"/>
+        </div>
+        <div class="detail">
+          <p class="title" id="roomTitle">房间名</p>
+          <p class="desc">主播：<span id="roomCreator"></span>&nbsp;&nbsp;在线人数：<span id="roomOnlineMemberNum"></span></p>
+        </div>
+      </div>
+      <div class="media">
+        <!--<img src="" id="video" class="hide">-->
+        <div id="my-publisher"></div>
+      </div>
+    </div>
+    <div class="g-right">
+      <div class="m-status" id="linkStatus">连接中。。。</div>
+      <div class="announcement_title" style="display: none">
+        直播公告
+      </div>
+      <div class="announcement" id="roomAnnouncement" style="display: none">
+      </div>
+      <ul class="tab">
+        <li class="crt j-tab" data-value="chat">直播互动</li>
+        <li class="j-tab" data-value="member">在线成员</li>
+      </ul>
+      <div class="chat j-pannel j-chat">
+      </div>
+      <div class="member j-pannel hide">
+        <div class="list j-member">
+        </div>
+        <div class="more j-more">
+          <a>加载更多</a>
+        </div>
+      </div>
+      <div id="chatroom-verified">
+        <div class="edit">
+          <textarea class="editText" id="editText" placeholder="Ctrl+Enter快速发送"></textarea>
+        </div>
+        <div class="sendBtn">
+          <div id="emojiTag"></div>
+          <a class="u-btn btn" id="clearText">清屏</a>
+          <a class="u-btn btn" id="sentText">发送</a>
+          <a class="btn custom" id="customBtn"></a>
+          <a class="btn emoji" id="emoji"></a>
+        </div>
+      </div>
+      <div id="chatroom-anonymous">
+        <em class="loginWarn">登录后方可发送消息</em>
+        <div class="loginBtn">
+          <a href="./login.html" class="u-btn btn">登录聊天室</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="head">
+    <div class="left">
+      <div class="board">
+        <h1>直播面板</h1> <span class="u-status"></span>
+      </div>
+      <div class="row">
+        <div class="m-input">
+          <span class="u-input-name">摄像头：</span>
+          <select class="u-input" id="cameraSelect">
+          </select>
+        </div>
+        <div class="m-input">
+          <span class="u-input-name">麦克风：</span>
+          <select class="u-input" id="microPhoneSelect">
+          </select>
+        </div>
+        <div class="m-input">
+          <span class="u-input-name">清晰度：</span>
+          <select class="u-input" id="qualitySelect">
+            <option value="0">流畅（360*480@20）</option>
+            <option value="1">标清（480*640@20）</option>
+            <option value="2">高清（540*960@20）</option>
+          </select>
+        </div>
+        <div class="m-input" style="display: none">
+          <span class="u-input-name">推流地址：</span>
+          <input class="u-input" type="text" id="publishUrl">
+        </div>
+      </div>
+      <div>温馨提示：&nbsp;&nbsp;&nbsp;请先选择摄像头、麦克风、清晰度预览，调整好摄像头位置，再点击开始直播。</div>
+    </div>
+    <div class="right">
+      <div class="m-input">
+        <button class="button button-primary button-rounded testBtn view" id="previewBtn" onclick="startPreview()">预览
+        </button>
+        <button class="button button-primary button-rounded testBtn" id="publishBtn" onclick="startPublish()">开始直播
+        </button>
+      </div>
+
+    </div>
+
+
+  </div>
+</div>
+<div id="menu" class="m-menu" style="display:none">
+  <ul>
+    <li class="j-item j-kick" data-type="0" title="移除直播室">踢人</li>
+    <li class="j-item j-gag" data-type="1" title="禁止发言">禁言</li>
+    <li class="j-item j-black" data-type="2" title="永久不能进入该直播间">拉黑该用户</li>
+    <li class="j-item admin j-admin" data-type="3" style="display:none;">任命管理员</li>
+  </ul>
+</div>
+<script src="../../3rd/nim_server_conf.js"></script>
+<script src="../js/config.js"></script>
+<script src="./../../../js/app.js"></script>
+<script src="./../../../js/crypto-js.min.js"></script>
+<script src="./../../../js/aesUtils.js"></script>
+<script src="../../3rd/jquery-1.11.3.min.js"></script>
+<script src="../js/md5.js"></script>
+<script src="./src/js/util.js"></script>
+<script src="./src/js/title.js"></script>
+<script src="../../3rd/jquery-1.11.3.min.js"></script>
+<script src="../../3rd/NIM_Web_SDK_v6.1.0.js"></script>
+<!-- <script src="../../3rd/NIM_Web_SDK.js"></script> -->
+
+<script src="./src/js/emoji.js"></script>
+<script src="./src/js/link.js"></script>
+<script src="./src/js/room.js"></script>
+<script src="./src/js/live.js"></script>
+</body>
+</html>

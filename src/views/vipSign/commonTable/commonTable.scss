@@ -1,0 +1,167 @@
+    .common-table {
+        height: calc(100% - 60px);
+        background: #fff;
+        .common-table-top {
+            width: 100%;
+            height: 64px;
+            table {
+                tr {
+                    th {
+                        font-size: 14px;
+                        color: #999;
+                    }
+                }
+                &.tit {
+                    background: #F5F5F5;
+                    height: 64px;
+                }
+                .sel {
+                    input {
+                        width: 16px;
+                        height: 16px;
+                        vertical-align: middle;
+                    }
+                    i {
+                        vertical-align: middle;
+                    }
+                }
+            }
+            &.other-tit-sty {
+                table {
+                    &.tit {
+                        background: #fff;
+                        height: 40px;
+                    }
+                }
+            }
+        }
+        .cont-table-bot {
+            height: calc(100% - 128px);
+            overflow: hidden;
+            overflow-y: auto;
+            .table-item {
+                border-bottom: 1px solid #ddd;
+                .table-item-wrap {
+                    width: 100%;
+                    font-size: 0;
+                    display: inline-table;
+                    span {
+                        display: table-cell;
+                        height: 40px;
+                        font-size: 12px;
+                        text-align: center;
+                        word-break: break-all;
+                        vertical-align: middle;
+                        &.look {
+                            color: #FFB026;
+                        }
+                        &.sure {
+                            color: #4EC478;
+                        }
+                        &.notSure {
+                            color: #FF7BB9;
+                        }
+                        &.edit {
+                            color: #FF9090;
+                        }
+                        &.cancel {
+                            color: #999;
+                        }
+                        &.wait {
+                            color: #5FBCFB;
+                        }
+                        &.revoke {
+                            color: #999;
+                        }
+                        &.reject {
+                            color: #dadada;
+                        }
+                        img.avatar {
+                            display: inline-block;
+                            width: 50px;
+                            height: 50px;
+                            border-radius: 25px;
+                            background: #000;
+                        }
+                        &.modify {
+                            cursor: pointer;
+                            color: #5FBCFB;
+                            user-select: none;
+                            b {
+                                font-weight: 500;
+                                vertical-align: middle;
+                                &.look {
+                                    color: #FFB026;
+                                }
+                                &.sure {
+                                    color: #4EC478;
+                                }
+                                &.notSure {
+                                    color: #FF7BB9;
+                                }
+                                &.edit {
+                                    color: #FF9090;
+                                }
+                                &.cancel {
+                                    color: #999;
+                                }
+                            }
+                            i {
+                                font-size: 12px;
+                                vertical-align: middle;
+                                &.iconjiantou {
+                                    display: inline-block;
+                                    transform-origin: center;
+                                    transform: rotateZ(-90deg);
+                                    transition: all .3s;
+                                }
+                            }
+                            &.active {
+                                i.iconjiantou {
+                                    transform: rotateZ(0deg);
+                                }
+                            }
+                        }
+                    }
+                }
+                .info {
+                    display: block;
+                    width: 100%;
+                    padding: 20px 0 20px 20px;
+                    transition: all .3s;
+                    display: none;
+                    .info-cont {
+                        font-size: 14px;
+                        .info-tit {
+                            color: #999;
+                            margin-right: 20px;
+                        }
+                        .cont {
+                            color: #333;
+                        }
+                    }
+                    &.show {
+                        display: inherit;
+                    }
+                }
+            }
+            &.no-bottom-line {
+                .table-item {
+                    border-bottom: none;
+                }
+            }
+        }
+        .pagination-wrap{
+            width:100%;
+            height:64px;
+            text-align:center;
+            position: relative;
+            .el-pagination{
+                display: inline-block;
+                position:absolute;
+                top:50%;
+                left:50%;
+                transform: translate(-50%,-50%);
+            }
+        }
+    }

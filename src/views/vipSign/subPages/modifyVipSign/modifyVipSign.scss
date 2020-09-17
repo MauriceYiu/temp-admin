@@ -1,0 +1,101 @@
+.modify-sign{
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    .top-panle{
+        font-size: 0;
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+        .left-cont,.right-cont{
+            display: inline-block;
+            width: 50%;
+            .tit{
+                font-size: 16px;
+                margin-right: 10px;
+                cursor: pointer;
+            }
+        }
+        .right-cont{
+            text-align: right;
+            .search{
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+        }
+    }
+    .bottom-panle{
+        font-size: 0;
+        width: 100%;
+        .left-cont,.right-cont{
+            display: inline-block;
+            width: 50%;
+            height: 100%;
+            font-size: 14px;
+            vertical-align: top;
+        }
+        .left-cont{
+            min-height: calc(100vh - 80px);
+        }
+        .right-cont{
+            min-height: calc(100vh - 80px);
+            border-left: 1px solid #ddd;
+            .right-tit{
+                font-size: 0;
+                padding: 20px;
+                color: #33C7DA;
+                span{
+                    display: inline-block;
+                    width: 50%;
+                    font-size: 14px;
+                    &.btn{
+                        text-align: right;
+                        color: #FF9090;
+                        cursor: pointer;
+                    }
+                }
+            }
+            .cont-wrap{
+                font-size: 12px;
+            }
+        }
+    }
+    .info-item{
+        width: 100%;
+        font-size: 0;
+        padding: 20px 0;
+        .item{
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 14px;
+        }
+        .item-name{
+            width: 15%;
+            text-align: center;
+        }
+        .item-cont{
+            width: 85%;
+            .add-item{
+                color: #5FBCFB;
+                cursor: pointer;
+            }
+            .up,.dl{
+                display: inline-block;
+                vertical-align: middle;
+            }
+            .dl{
+                margin-left: 20px;
+            }
+            .modify-sign{
+                margin-left: 20px;
+                span{
+                    cursor: pointer;
+                    &.del{
+                        color: #dadada;
+                    }
+                    &.edit{
+                        color: #FF9090;
+                    }
+                }
+            }
+        }
+    }
+}
